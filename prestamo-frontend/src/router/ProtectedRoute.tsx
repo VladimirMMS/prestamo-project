@@ -1,4 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
+import {RootState } from '../store';
+import { useSelector } from 'react-redux';
 
 
 interface ProtectedRouteProps {
@@ -6,8 +8,10 @@ interface ProtectedRouteProps {
 }
 
 function ProtectedRoute({ path }: ProtectedRouteProps) {
-  const isUserLogin = true
-  if (!isUserLogin) return <Navigate to={path} replace />;
+  const auth = useSelector((state: RootState) => state.login);
+
+
+  if (!auth.isUserLogin) return <Navigate to={path} replace />;
 
   return <Outlet />;
 }
