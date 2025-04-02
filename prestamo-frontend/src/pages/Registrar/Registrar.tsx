@@ -28,7 +28,7 @@ export default function Registrar() {
   return (
     <div
       style={{
-        backgroundColor: "#ffffff",
+        backgroundColor: "#1976d2",
       }}
     >
       <SignUpForm country={data.countries} provincia={data.provinces} />

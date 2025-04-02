@@ -1,47 +1,37 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { DataGrid } from '@mui/x-data-grid';
+import { NoRowsOverlay } from '../NoFoundRows/NotFoundRows';
 
-
-
-const rows = [
-
-];
-
-export default function BasicTable() {
+export default function DataTable({
+  columns,
+  rows,
+  count,
+  handlePageChange,
+  handleSort,
+  handleFilter,
+  page,
+  message,
+}: any) {
+  console.log(rows, 'rows');
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Monto</TableCell>
-            <TableCell align="right">Interes</TableCell>
-            <TableCell align="right">Fecha Creacion</TableCell>
-            <TableCell align="right">Monto de la cuota</TableCell>
-            <TableCell align="right">Estado</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rows.length) ? rows?.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          )) : <p>No hay Solicitudes</p>}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div
+      style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+    >
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        getRowId={(row) => row.id}
+        rowCount={count}
+        onPaginationModelChange={handlePageChange}
+        onFilterModelChange={handleFilter}
+        sortingOrder={['desc', 'asc']}
+        onSortModelChange={handleSort}
+        rowHeight={100}
+        autoPageSize={true}
+        slots={{
+          noRowsOverlay: (props) => <NoRowsOverlay message={message} {...props} />
+        }}
+      />
+    </div>
   );
 }

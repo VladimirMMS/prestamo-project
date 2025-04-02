@@ -3,5 +3,7 @@ export const enum AppRoutes {
     DASHBOARD = '/',
     SOLICITAR_PRESTAMO = '/solicitar-prestamo',
     PRESTAMOS = '/prestamos',
+    CUENTRAS_BANCARIAS = '/cuentas-bancarias',
     REGISTRAR = '/registrar',
+    SOLICITUDES_PENDIENTES = '/solicitudes-pendientes',
   }

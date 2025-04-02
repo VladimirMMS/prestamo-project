@@ -11,18 +11,21 @@ import {
 } from "@mui/material";
 import { loginUser } from "../../services/login";
 import { useDispatch } from "react-redux";
-import { AppDispatch,  } from "../../store";
+import { AppDispatch } from "../../store";
 import { login } from "../../store/client";
 import { useNavigate } from "react-router-dom";
 
+const innitialState = {
+  email: "",
+  password: "",
+};
+
 const LoginForm: React.FC = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState(innitialState);
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -32,14 +35,15 @@ const LoginForm: React.FC = () => {
     event.preventDefault();
     try {
       const response = await loginUser(formData);
+
       if (response.statusCode || response.code || response.error) {
         throw new Error("Usuario o contraseña incorrectos");
       }
       dispatch(login(response));
       navigate("/");
-
     } catch (error: any) {
       setErrorMessage(error.message || "Ocurrió un error inesperado");
+      setFormData(innitialState);
     }
   };
 
@@ -63,6 +67,9 @@ const LoginForm: React.FC = () => {
           width: "100%",
         }}
       >
+        <Box display="flex" justifyContent="center" mb={2}>
+          <img src="/vite.png" alt="Logo" style={{ width: 100, height: 100 }} />
+        </Box>
         <Typography variant="h4" gutterBottom align="center">
           Login
         </Typography>
@@ -99,13 +106,13 @@ const LoginForm: React.FC = () => {
           </Box>
         </form>
         {errorMessage && (
-        <Typography color="error" align="center" mt={2} style={{color: "red"}}>
-          {errorMessage}
-        </Typography>
-      )}
+          <Typography color="error" align="center" mt={2} style={{ color: "red" }}>
+            {errorMessage}
+          </Typography>
+        )}
         <Box mt={2} display="flex" justifyContent="center">
           <Typography variant="body2">
-            ¿No tienes una cuenta?{" "}
+            ¿No tienes una cuenta? {" "}
             <Link href="/registrar">Regístrate aquí</Link>
           </Typography>
         </Box>

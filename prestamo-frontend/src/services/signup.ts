@@ -18,12 +18,11 @@ export const signUpUser = async (formData: any) => {
       });
 
       if (!response.ok) {
-        throw new Error("Error al enviar los datos");
+        return response.json()
       }
 
       return await response.json();
     } catch (error) {
-      console.error("Error en signUpUser:", error);
-      throw error;
+      console.error(error);
     }
   };
